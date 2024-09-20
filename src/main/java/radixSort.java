@@ -1,15 +1,11 @@
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 public class radixSort {
-    public static String getSortedList(String fileName) throws IOException {
+    public static List<String> getSortedList(String fileName) throws IOException {
         List<String> file;
         try {
             file = Files.readAllLines(Path.of(fileName));
@@ -36,10 +32,11 @@ public class radixSort {
         if (!currWord.isEmpty()) {
             words.add(currWord.toString());
         }
-        return String.valueOf(file);
+
+        return digitalSort(words);
     }
 
-    public static void digitalSort(List<String> words) {
+    private static List<String> digitalSort(List<String> words) {
         char[] chars = new char[26];
         for (int i = 0; i < chars.length; i++) {
             chars[i] = (char) ('a' + i);
@@ -54,7 +51,7 @@ public class radixSort {
         }
         
         //  более короткие слова дополним нулями слева
-        for (int i = 0; i < words.toArray().length; i++) {
+        for (int i = 0; i < words.size(); i++) {
             if (words.get(i).length() < len) {
                 words.set(i, words.get(i) + "0".repeat(len - words.get(i).length()));
             }
@@ -72,7 +69,7 @@ public class radixSort {
                     forSort.get(word.charAt(i) - 'a').add(word);
                 }
                 else {
-                    forSort.get('z' - 'a').add(word);
+                    forSort.get(0).add(word);
                 }
             }
 
@@ -82,6 +79,10 @@ public class radixSort {
             }
         }
 
-        System.out.println(words);
+        for (int i = 0; i < words.size(); i++) {
+            words.set(i, words.get(i).replaceAll("0+$", ""));
+        }
+
+        return words.stream().distinct().toList();
     }
 }

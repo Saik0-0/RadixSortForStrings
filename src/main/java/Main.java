@@ -4,13 +4,13 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
+        List<String> f;
         try {
-            System.out.println(radixSort.getSortedList("files/1.txt"));
+            f = radixSort.getSortedList("files/1.txt");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        List<String> words = Arrays.asList("apple", "banana", "kiwi", "peach", "grape", "berry");
-        radixSort.digitalSort(words);
+        System.out.println(f);
     }
 }
