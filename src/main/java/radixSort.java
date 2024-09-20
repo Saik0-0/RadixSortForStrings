@@ -7,6 +7,7 @@ import java.util.List;
 public class radixSort {
     public static List<String> getSortedList(String fileName) throws IOException {
         List<String> file;
+
         try {
             file = Files.readAllLines(Path.of(fileName));
         } catch (IOException e) {
@@ -16,8 +17,10 @@ public class radixSort {
 
         List<String> words = new ArrayList<>();
         StringBuilder currWord = new StringBuilder();
+
         for (int i = 0; i < String.valueOf(file).length(); i++) {
             char c = String.valueOf(file).charAt(i);
+
             if (Character.isLetter(c)) {
                 currWord.append(Character.toLowerCase(c));
             }
@@ -36,11 +39,9 @@ public class radixSort {
         return digitalSort(words);
     }
 
+
     private static List<String> digitalSort(List<String> words) {
-        char[] chars = new char[26];
-        for (int i = 0; i < chars.length; i++) {
-            chars[i] = (char) ('a' + i);
-        }
+
 
         //  ищем самое длинное слово
         int len = 0;
@@ -57,6 +58,7 @@ public class radixSort {
             }
         }
 
+        //  поразрядная сортировка
         for (int i = len - 1; i >= 0; i--) {
 
             List<List<String>> forSort = new ArrayList<>();
@@ -79,9 +81,8 @@ public class radixSort {
             }
         }
 
-        for (int i = 0; i < words.size(); i++) {
-            words.set(i, words.get(i).replaceAll("0+$", ""));
-        }
+        //  удаляем добавленные нули
+        words.replaceAll(word -> word.replaceAll("0+$", ""));
 
         return words.stream().distinct().toList();
     }
