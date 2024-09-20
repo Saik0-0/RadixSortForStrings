@@ -17,6 +17,25 @@ public class radixSort {
             System.out.println("С файлом какая-то проблема((");
             return null;
         }
+
+        List<String> words = new ArrayList<>();
+        StringBuilder currWord = new StringBuilder();
+        for (int i = 0; i < String.valueOf(file).length(); i++) {
+            char c = String.valueOf(file).charAt(i);
+            if (Character.isLetter(c)) {
+                currWord.append(Character.toLowerCase(c));
+            }
+            else {
+                if (!currWord.isEmpty()) {
+                    words.add(currWord.toString());
+                    currWord.setLength(0);
+                }
+            }
+        }
+
+        if (!currWord.isEmpty()) {
+            words.add(currWord.toString());
+        }
         return String.valueOf(file);
     }
 
